@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ----------------------------------------------------------------------
+   Design tokens. Same variable names in both themes so components never
+   need dark:/light: prefixes for color — just bg-canvas, text-ink, etc.
+   ---------------------------------------------------------------------- */
+:root {
+  /* Light theme (default) */
+  --bg: #f7f8fa;
+  --bg-panel: #ffffff;
+  --bg-panel-2: #f0f2f6;
+  --text: #0b0f19;
+  --text-muted: #5b6472;
+  --border: rgba(11, 15, 25, 0.09);
+  --border-strong: rgba(11, 15, 25, 0.16);
+  --teal: #0f9c8c;
+  --teal-dim: #0c7b6e;
+  --amber: #c9701c;
+  --amber-dim: #a85c15;
+
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+.dark {
+  --bg: #0b0f19;
+  --bg-panel: #121826;
+  --bg-panel-2: #171f30;
+  --text: #e7eaf2;
+  --text-muted: #93a0b8;
+  --border: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --teal: #5eead4;
+  --teal-dim: #2dd4bf;
+  --amber: #fdba74;
+  --amber-dim: #fb923c;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Faint circuit-grid backdrop, fades out toward the bottom of the hero */
+.grid-texture::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(
+    ellipse 80% 60% at 50% 0%,
+    black 40%,
+    transparent 90%
+  );
+  mask-image: radial-gradient(
+    ellipse 80% 60% at 50% 0%,
+    black 40%,
+    transparent 90%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+::selection {
+  background: var(--teal);
+  color: var(--bg);
+}
+
+/* Visible keyboard focus everywhere, including inside dark panels */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 3px;
+}
